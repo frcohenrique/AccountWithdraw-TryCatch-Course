@@ -4,14 +4,15 @@ import java.util.Locale;
 import java.util.Scanner;
 
 import model.entities.Account;
+import model.exceptions.AccountException;
 
 public class Program {
 
 	public static void main(String[] args) {
-		
+
 		Locale.setDefault(Locale.US);
 		Scanner sc = new Scanner(System.in);
-		
+
 		System.out.println("Enter account data");
 		System.out.print("Number: ");
 		int number = sc.nextInt();
@@ -22,16 +23,18 @@ public class Program {
 		Double initialBalance = sc.nextDouble();
 		System.out.print("Withdraw limit: ");
 		Double withdrawLimit = sc.nextDouble();
-		
+
 		Account acc = new Account(number, holder, initialBalance, withdrawLimit);
-		
-		System.out.println(acc.getBalance());
-		
+
+
 		System.out.print("Enter amount for withdraw: ");
 		Double withdrawAmount = sc.nextDouble();
-		acc.withdraw(withdrawAmount);
-		
-		System.out.println(acc.getBalance());
+		try {
+			acc.withdraw(withdrawAmount);
+
+		} catch (AccountException e) {
+			System.out.println("Withdraw error: " + e.getMessage());
+		}
 		sc.close();
 
 	}
